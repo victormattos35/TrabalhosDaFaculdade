@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:form id="formMenu">
+		<p:panelMenu style="width:200px; margin-top:30px;">
+			<p:submenu label="Produtos">
+				<p:menuitem value="Cadastro de produtos"
+					outcome="/paginas/cadastroProduto.xhtml" />
+				<p:menuitem value="Lista de produtos"
+					outcome="/paginas/listaProduto.xhtml" />
+				<p:menuitem value="Alterar quantidade"
+					outcome="/paginas/alterarQuantidadeProduto.xhtml" />
+			</p:submenu>
+			<p:submenu label="Fornecedor">
+				<p:menuitem value="Cadastro de fornecedor"
+					outcome="/paginas/cadastroFornecedores.xhtml" />
+				<p:menuitem value="Lista de fornecedores"
+					outcome="/paginas/listaFornecedores.xhtml" />
+			</p:submenu>
+			<p:submenu label="Funcionário">
+				<p:menuitem value="Cadastro de funcionário"
+					outcome="/paginas/cadastroFuncionario.xhtml" />
+				<p:menuitem value="Lista de funcionarios"
+					outcome="/paginas/listaFuncionario.xhtml" />
+			</p:submenu>
+			<p:submenu label="Clientes">
+				<p:menuitem value="Cadastro de clientes"
+					outcome="/paginas/cadastroCliente.xhtml" />
+				<p:menuitem value="Lista de clientes"
+					outcome="/paginas/listaCliente.xhtml" />
+				<p:menuitem value="Lista dos que mais compram"
+					outcome="/paginas/listaClienteCompram.xhtml" />
+			</p:submenu>
+			<p:submenu label="Caixa">
+				<p:menuitem value="Lista de compras"
+					outcome="/paginas/cadastroFuncionario.xhtml" />
+				<p:menuitem value="Cancelar compra"
+					outcome="/paginas/cancelarCompra.xhtml" />
+			</p:submenu>
+			<p:submenu label="Saída de Produtos">
+				<p:menuitem value="Adicionar" outcome="/paginas/adicionarSaidaProduto.xhtml"/>
+				<p:menuitem value="Listar os Produtos" outcome="/paginas/listaSaidaProduto.xhtml"/>
+			</p:submenu>
+			<p:submenu label="Filial">
+				<p:menuitem value="Cadastrar Filial" outcome="/paginas/cadastrarFilial.xhtml" />
+				<p:menuitem value="Listar Filial" outcome="/paginas/listaFilial.xhtml"/>
+			</p:submenu>
+		</p:panelMenu>
+	</h:form>
+</ui:composition>

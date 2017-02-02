@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/modeloSistema.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:event listener="#{MBVenda.carregarProdutos}" type="preRenderView" />
+
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="frmVenda">
+			<p:dataTable id="tblProdListagem" value="#{MBVenda.itens}"
+				widgetVar="tabelaProdListagem" var="item"
+				emptyMessage="Nenhum Produto Encontrado." paginator="true" rows="4"
+				filteredValue="#{MBVenda.itensFiltrados}">
+				<f:facet name="header">
+					<h:outputText value="Produtos" />
+				</f:facet>
+				<p:column headerText="Código" filterBy="#{item.codigo}"
+					sortBy="#{item.codigo}">
+					<h:outputText value="#{item.codigo}" />
+				</p:column>
+				<p:column headerText="Descrição" filterBy="#{item.descricao}"
+					sortBy="#{item.descricao}">
+					<h:outputText value="#{item.descricao}" />
+				</p:column>
+				<p:column headerText="Preço" sortBy="#{item.preco}">
+					<h:outputText value="#{item.preco}">
+						<f:convertNumber pattern="0.00" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="QTDE" sortBy="#{item.quantidade}">
+					<h:outputText value="#{item.quantidade}" />
+				</p:column>
+				<p:column headerText="Fabricante"
+					filterBy="#{item.fabricante.descricao}"
+					sortBy="#{item.fabricante.descricao}">
+					<h:outputText value="#{item.fabricante.descricao}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:commandButton value="Adicionar"
+						actionListener="#{MBVenda.adicionar(item)}"
+						update=":frmVenda:tblItens :frmVenda:txtVendaValorTotal" />
+				</p:column>
+			</p:dataTable>
+			<p:separator />
+			<p:dataTable value="#{MBVenda.listaItem}" var="item" id="tblItens"
+				emptyMessage="Nenhum Produto Encontrado." paginator="true" rows="4">
+				<f:facet name="header">
+					<h:outputText value="Carrinho" />
+				</f:facet>
+				<p:column headerText="Descrição">
+					<h:outputText value="#{item.produto.descricao}" />
+				</p:column>
+
+				<p:column headerText="Fabricante">
+					<h:outputText value="#{item.produto.fabricante.descricao}" />
+				</p:column>
+				<p:column headerText="Quantidade">
+					<h:outputText value="#{item.quantidade}" />
+				</p:column>
+				<p:column headerText="Preço">
+					<h:outputText value="#{item.valor_parcial}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:commandButton value="Remover"
+						actionListener="#{MBVenda.remover(item)}"
+						update=":frmVenda:tblItens :frmVenda:txtVendaValorTotal" />
+				</p:column>
+			</p:dataTable>
+			<p:separator />
+			<p:panelGrid columns="2">
+				<h:outputText id="txtVendaValorTotal"
+					value="Valor Total: #{MBVenda.vendaCadastro.valor}" />
+				<p:commandButton value="Finalizar Venda"
+					actionListener="#{MBVenda.carregarDadosVenda}"
+					oncomplete="PF('dlgFinVenda').show();"
+					update=":frmFinVenda:FinVenDados" />
+			</p:panelGrid>
+		</h:form>
+
+		<p:dialog closable="false" draggable="false" resizable="false"
+			modal="true" appendTo="@(body)" header="Finalização da Venda"
+			widgetVar="dlgFinVenda">
+			<h:form id="frmFinVenda">
+				<p:panelGrid id="FinVenDados" columns="3">
+					<h:outputText value="Horário:" />
+					<h:outputText value="#{MBVenda.vendaCadastro.horario}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+							timeZone="America/Sao_Paulo" />
+					</h:outputText>
+<p:outputLabel />
+					<p:outputLabel value="Funcionario: " for="txtFun" />
+					<p:inputText id="txtFun"
+						value="#{MBFuncionario.funcionario.codigo}" disabled="true" />
+					<p:commandButton value="Buscar Funcionario"
+						onclick="PF('dialogFun').show()" />
+
+					<h:outputText value="Valor Total:" />
+					<h:outputText value="#{MBVenda.vendaCadastro.valor}" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="2">
+					<p:commandButton value="Finalizar Venda"
+						actionListener="#{MBVenda.salvar}"
+						update=":msgGlobal :frmVenda:tblItens :frmVenda:txtVendaValorTotal"
+						oncomplete="PF('dlgFinVenda').hide();" />
+					<p:commandButton value="Voltar" onclick="PF('dlgFinVenda').hide();" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<h:form id="frmBuscaFun">
+			<p:dialog widgetVar="dialogFun" closable="false" draggable="false"
+				resizable="false" modal="true" appendTo="@(body)" height="400px">
+				<p:dataTable value="#{MBFuncionario.itens}" var="fun">
+					<f:facet name="header">Busca de Funcionario</f:facet>
+					<p:column headerText="Codigo">
+						<h:outputText value="#{fun.codigo}" />
+					</p:column>
+					<p:column headerText="Nome">
+						<h:outputText value="#{fun.nome}" />
+					</p:column>
+					<p:column headerText="CPF">
+						<h:outputText value="#{fun.cpf}" />
+					</p:column>
+					<p:column headerText="Função">
+						<h:outputText value="#{fun.funcao}" />
+					</p:column>
+					<p:column headerText="Selecionar">
+						<p:commandButton value="Selecionar"
+							onclick="PF('dialogFun').hide();" update=":frmVenda">
+							<f:setPropertyActionListener
+								target="#{MBFuncionario.funcionario.codigo}"
+								value="#{fun.codigo}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

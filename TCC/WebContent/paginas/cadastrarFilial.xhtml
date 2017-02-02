@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/modeloPrincipal.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="menuladoe">
+		<ui:include src="/includes/itensGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="menuladod">
+		<h:form id="frmNovoFilial">
+			<h3>Cadastro de Filial</h3>
+			<h:panelGrid id="pnlFiliNovo" columns="2">
+				<p:outputLabel for="txtNomeFiliNovo" value="Nome: " />
+				<p:inputText id="txtNomeFiliNovo" maxlength="50" size="30"
+					value="#{MBFilial.filial.nome}" required="true"
+					requiredMessage="O Campo Nome é Obrigatório." />
+
+				<p:outputLabel for="txtEndeFiliNovo" value="Endereço: " />
+				<p:inputText id="txtEndeFiliNovo" maxlength="50" size="30" value="#{MBFilial.filial.rua}"
+					required="true" requiredMessage="O Campo Endereço é Obrigatório." />
+
+				<p:outputLabel for="txtNumFiliNovo" value="Número: " />
+				<p:inputText maxlength="5" size="7" id="txtNumFiliNovo"
+					value="#{MBFilial.filial.numero}" required="true"
+					requiredMessage="O Campo Número é Obrigatório." />
+
+				<p:outputLabel for="txtBarFiliNovo" value="Bairro: " />
+				<p:inputText maxlength="50" size="30" id="txtBarFiliNovo"
+					value="#{MBFilial.filial.bairro}" required="true"
+					requiredMessage="O Campo Bairro é Obrigatório." />
+
+				<p:outputLabel for="txtCidFiliNovo" value="Cidade: " />
+				<p:inputText maxlength="30" size="30" id="txtCidFiliNovo"
+					value="#{MBFilial.filial.cidade}" required="true"
+					requiredMessage="O Campo Bairro é Obrigatório." />
+
+				<p:outputLabel for="txtEstFiliNovo" value="Estado: " />
+				<p:inputText maxlength="2" size="3" id="txtEstFiliNovo"
+					value="#{MBFilial.filial.estado}" required="true"
+					requiredMessage="O Campo Estado é Obrigatório." />
+
+				<p:outputLabel for="txtTelFiliNovo" value="Telefone: " />
+				<p:inputMask id="txtTelFiliNovo" mask="(99)9999-9999" maxlength="13" size="15"
+					value="#{MBFilial.filial.telefone}" required="true"
+					requiredMessage="O Campo Telefone é Obrigatório." />
+
+				<p:outputLabel value="E-mail: " />
+				<p:inputText maxlength="45" size="50"
+					value="#{MBFilial.filial.email}" />
+
+				<p:outputLabel value="Fax: " />
+				<p:inputMask mask="(99)9999-9999" maxlength="13" size="15"
+					value="#{MBFilial.filial.fax}" />
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="2">
+				<p:commandButton value="Gravar" actionListener="#{MBFilial.novo}"
+					update=":msgGlobal :frmNovoFilial" id="but" />
+				<p:commandButton value="Cancelar" id="but2">
+					<p:resetInput target="frmNovoFilial" />
+				</p:commandButton>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="rodape">
+		<ui:include src="/includes/rodape.xhtml" />
+	</ui:define>
+
+</ui:composition>

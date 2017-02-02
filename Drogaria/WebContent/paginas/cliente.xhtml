@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/modeloSistema.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="frmCliListagem">
+			<p:dataTable id="tblCliente" widgetVar="tabelaCliente"
+				emptyMessage="Nenhum Cliente Encontrado!" value="#{MBCliente.itens}"
+				var="item" filteredValue="#{MBCliente.itensFiltrados}"
+				paginator="true" rows="10">
+
+				<f:facet name="header">
+				       Lista de Clientes
+				</f:facet>
+				<p:column headerText="Código" sortBy="#{item.idcliente}"
+					filterBy="#{item.idcliente}">
+					<h:outputText value="#{item.idcliente}" />
+				</p:column>
+
+				<p:column headerText="Nome" sortBy="#{item.nome}"
+					filterBy="#{item.nome}">
+					<h:outputText value="#{item.nome}" />
+				</p:column>
+
+				<p:column headerText="Telefone" sortBy="#{item.telefone}"
+					filterBy="#{item.telefone}">
+					<h:outputText value="#{item.telefone}" />
+				</p:column>
+
+				<p:column headerText="Celular" sortBy="#{item.celular}"
+					filterBy="#{item.celular}">
+					<h:outputText value="#{item.celular}" />
+				</p:column>
+
+				<p:column headerText="Endereço" sortBy="#{item.endereco}"
+					filterBy="#{item.endereco}">
+					<h:outputText value="#{item.endereco}" />
+				</p:column>
+
+				<p:column headerText="Número" sortBy="#{item.numero}"
+					filterBy="#{item.numero}">
+					<h:outputText value="#{item.numero}" />
+				</p:column>
+
+				<p:column headerText="Bairro" sortBy="#{item.bairro}"
+					filterBy="#{item.bairro}">
+					<h:outputText value="#{item.bairro}" />
+				</p:column>
+
+				<p:column headerText="Cidade" sortBy="#{item.cidade}"
+					filterBy="#{item.cidade}">
+					<h:outputText value="#{item.cidade}" />
+				</p:column>
+
+				<p:column headerText="Estado" sortBy="#{item.estado}"
+					filterBy="#{item.estado}">
+					<h:outputText value="#{item.estado}" />
+				</p:column>
+
+
+				<p:column headerText="Opções" exportable="false">
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgCliExcluir').show();"
+						update=":frmCliExcluir:pnlCliExcluir">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBCliente.cliente}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-pencil"
+						oncomplete="PF('dlgCliEditar').show();"
+						update=":frmCliEditar:pnlCliEditar">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBCliente.cliente}" />
+					</p:commandButton>
+				</p:column>
+				<f:facet name="footer">
+					<p:commandButton value="Novo"
+						actionListener="#{MBCliente.prepararNovo}"
+						oncomplete="PF('dlgCliNovo').show();"
+						update=":frmCliNovo:pnlCliNovo" />
+					<p:commandButton value="Voltar ao Menu Principal"
+						action="/paginas/principal.xhtml" />
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog widgetVar="dlgCliNovo" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Cliente - Novo">
+			<h:form id="frmCliNovo">
+
+				<h:panelGrid id="pnlCliNovo" columns="2">
+					<p:outputLabel for="txtNomeCliNovo" value="Nome: " />
+					<p:inputText id="txtNomeCliNovo" maxlength="50" size="30"
+						value="#{MBCliente.cliente.nome}" required="true"
+						requiredMessage="O Campo Nome é Obrigatório." />
+
+					<p:outputLabel for="txtTelCilNovo" value="Telefone: " />
+					<p:inputMask mask="(99)9999-9999" id="txtTelCilNovo" maxlength="13"
+						size="15" value="#{MBCliente.cliente.telefone}" required="true"
+						requiredMessage="O Campo Telefone é Obrigatório." />
+
+					<p:outputLabel for="txtCelCliNovo" value="Celular: " />
+					<p:inputMask mask="(99)99999-9999" id="txtCelCliNovo"
+						maxlength="13" size="15" value="#{MBCliente.cliente.celular}"
+						required="true" requiredMessage="O Campo Celular é Obrigatório." />
+
+					<p:outputLabel for="txtEndCliNovo" value="Endereço: " />
+					<p:inputText id="txtEndCliNovo" maxlength="50" size="30"
+						value="#{MBCliente.cliente.endereco}" required="true"
+						requiredMessage="O Campo Endereço é Obrigatório." />
+
+					<p:outputLabel for="txtNumCliNovo" value="Número: " />
+					<p:inputText id="txtNumCliNovo" maxlength="5" size="7"
+						value="#{MBCliente.cliente.numero}" required="true"
+						requiredMessage="O Campo Número é Obrigatório." />
+
+					<p:outputLabel for="txtBarCliNovo" value="Bairro: " />
+					<p:inputText id="txtBarCliNovo" maxlength="50" size="30"
+						value="#{MBCliente.cliente.bairro}" required="true"
+						requiredMessage="O Campo Bairro é Obrigatório." />
+
+					<p:outputLabel for="txtCidCliNovo" value="Cidade: " />
+					<p:inputText id="txtCidCliNovo" maxlength="30" size="30"
+						value="#{MBCliente.cliente.cidade}" required="true"
+						requiredMessage="O Campo Cidade é Obrigatório." />
+
+					<p:outputLabel for="txtEstCliNovo" value="Estado: " />
+					<p:inputText id="txtEstCliNovo" maxlength="2" size="3"
+						value="#{MBCliente.cliente.estado}" required="true"
+						requiredMessage="O Campo Estado é Obrigatório." />
+
+
+				</h:panelGrid>
+
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Gravar" actionListener="#{MBCliente.novo}"
+						oncomplete="verificar(xhr, status, args, 'dlgCliNovo', 'tabelaCliente')"
+						update=":frmCliListagem:tblCliente :msgGlobal" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgCliNovo').hide();">
+						<p:resetInput target="pnlCliNovo" />
+					</p:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgCliExcluir" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Cliente - Exluir">
+			<h:form id="frmCliExcluir">
+				<p:panelGrid id="pnlCliExcluir" columns="2">
+					<h:outputText value="Código:" />
+					<h:outputText value="#{MBCliente.cliente.idcliente}" />
+
+					<h:outputText value="Nome:" />
+					<h:outputText value="#{MBCliente.cliente.nome}" />
+
+					<h:outputText value="Telefone:" />
+					<h:outputText value="#{MBCliente.cliente.telefone}" />
+
+					<h:outputText value="Celular:" />
+					<h:outputText value="#{MBCliente.cliente.celular}" />
+
+					<h:outputText value="Endereço:" />
+					<h:outputText value="#{MBCliente.cliente.endereco}" />
+
+					<h:outputText value="Número:" />
+					<h:outputText value="#{MBCliente.cliente.numero}" />
+
+					<h:outputText value="Bairro:" />
+					<h:outputText value="#{MBCliente.cliente.bairro}" />
+
+					<h:outputText value="Cidade:" />
+					<h:outputText value="#{MBCliente.cliente.cidade}" />
+
+					<h:outputText value="Estado:" />
+					<h:outputText value="#{MBCliente.cliente.estado}" />
+
+				</p:panelGrid>
+
+				<p:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBCliente.excluir}"
+						oncomplete="PF('dlgCliExcluir').hide(); tabelaCliente.clearFilters();"
+						update=":frmCliListagem:tblCliente :msgGlobal" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgCliExcluir').hide();" />
+				</p:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgCliEditar" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Cliente - Editar">
+			<h:form id="frmCliEditar">
+				<p:panelGrid columns="2" id="pnlCliEditar">
+					<p:outputLabel value="Código" />
+					<h:outputText value="#{MBCliente.cliente.idcliente}" />
+
+					<p:outputLabel for="txtNomeCliEditar" value="Nome: " />
+					<h:inputText id="txtNomeCliEditar" maxlength="50" size="30"
+						value="#{MBCliente.cliente.nome}" required="true"
+						requiredMessage="O Campo Nome é Obrigatório." />
+
+					<p:outputLabel for="txtTelCilEditar" value="Telefone: " />
+					<p:inputMask mask="(99)9999-9999" id="txtTelCilEditar"
+						maxlength="13" size="15" value="#{MBCliente.cliente.telefone}"
+						required="true" requiredMessage="O Campo Telefone é Obrigatório." />
+
+					<p:outputLabel for="txtCelCliEditar" value="Celular: " />
+					<p:inputMask mask="(99)99999-9999" id="txtCelCliEditar"
+						maxlength="13" size="15" value="#{MBCliente.cliente.celular}"
+						required="true" requiredMessage="O Campo Celular é Obrigatório." />
+
+					<p:outputLabel for="txtEndCliEditar" value="Endereço: " />
+					<h:inputText id="txtEndCliEditar" maxlength="50" size="30"
+						value="#{MBCliente.cliente.endereco}" required="true"
+						requiredMessage="O Campo Endereço é Obrigatório." />
+
+					<p:outputLabel for="txtNumCliEditar" value="Número: " />
+					<h:inputText id="txtNumCliEditar" maxlength="5" size="7"
+						value="#{MBCliente.cliente.numero}" required="true"
+						requiredMessage="O Campo Número é Obrigatório." />
+
+					<p:outputLabel for="txtBarCliEditar" value="Bairro: " />
+					<h:inputText id="txtBarCliEditar" maxlength="50" size="30"
+						value="#{MBCliente.cliente.bairro}" required="true"
+						requiredMessage="O Campo Bairro é Obrigatório." />
+
+					<p:outputLabel for="txtCidCliEditar" value="Cidade: " />
+					<h:inputText id="txtCidCliEditar" maxlength="30" size="30"
+						value="#{MBCliente.cliente.cidade}" required="true"
+						requiredMessage="O Campo Cidade é Obrigatório." />
+
+					<p:outputLabel for="txtEstCliEditar" value="Estado: " />
+					<h:inputText id="txtEstCliEditar" maxlength="2" size="3"
+						value="#{MBCliente.cliente.estado}" required="true"
+						requiredMessage="O Campo Estado é Obrigatório." />
+
+
+				</p:panelGrid>
+
+
+				<p:panelGrid columns="2">
+					<p:commandButton value="Editar"
+						actionListener="#{MBCliente.editar}"
+						oncomplete="verificar(xhr, status, args, 'dlgCliEditar', 'tabelaCliente')"
+						update=":frmCliListagem:tblCliente :msgGlobal" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgCliEditar').hide();">
+						<p:resetInput target="pnlCliEditar" />
+					</p:commandButton>
+
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

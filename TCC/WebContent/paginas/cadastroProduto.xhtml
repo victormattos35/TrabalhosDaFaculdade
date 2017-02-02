@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/modeloPrincipal.xhtml">
+
+	<f:metadata>
+		<f:event listener="#{MBProduto.prepararNovo}" type="preRenderView" />
+	</f:metadata>
+	<ui:define name="menu">
+		<ui:include src="/includes/menuGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="menuladoe">
+		<ui:include src="/includes/itensGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="menuladod">
+		<h3>Cadastro de Produto</h3>
+		<h:form id="frmProdNovo">
+			<h:panelGrid id="pnlProdNovo" columns="2">
+			
+				<p:outputLabel for="txtDescProdNovo" value="Descrição:" />
+				<p:inputText id="txtDescProdNovo"
+					value="#{MBProduto.produto.descricao}" maxlength="50" size="30"
+					required="true" requiredMessage="O Campo Descrição é Obrigatório." />
+					
+				<p:outputLabel for="txtMarcProdNovo" value="Marca:" />
+				<p:inputText id="txtMarcProdNovo" value="#{MBProduto.produto.marca}"
+					maxlength="50" size="30" required="true"
+					requiredMessage="O Campo Marca é Obrigatório." />
+				<p:outputLabel for="txtDepProdNovo" value="Departamento:" />
+				<p:inputText id="txtDepProdNovo"
+					value="#{MBProduto.produto.departamento}" maxlength="50" size="30"
+					required="true"
+					requiredMessage="O Campo Departamento é Obrigatório." />
+				<p:outputLabel for="txtRefProdNovo" value="Referência:" />
+				<p:inputText id="txtRefProdNovo"
+					value="#{MBProduto.produto.referencia}" maxlength="50" size="30"
+					required="true" requiredMessage="O Campo Referência é Obrigatório." />
+				<p:outputLabel for="txtValCProdNovo" value="Valor Custo:" />
+				<p:inputText id="txtValCProdNovo"
+					value="#{MBProduto.produto.valor_custo}" size="7" required="true"
+					requiredMessage="O Campo Valor de Custo é Obrigatório."
+					converterMessage="Informe um valor válido para o campo preço."
+					validatorMessage="Informe um valor entre 0,00 e 9999,99 para o campo preço.">
+					<f:convertNumber pattern="0.00" />
+					<f:validateDoubleRange minimum="0.00" maximum="9999.99" />
+				</p:inputText>
+				<p:outputLabel for="txtValVProdNovo" value="Valor Venda:" />
+				<p:inputText id="txtValVProdNovo"
+					value="#{MBProduto.produto.valor_venda}" size="7" required="true"
+					requiredMessage="O Campo Valor de Venda é Obrigatório."
+					converterMessage="Informe um valor válido para o campo preço."
+					validatorMessage="Informe um valor entre 0,00 e 9999,99 para o campo preço.">
+					<f:convertNumber pattern="0.00" />
+					<f:validateDoubleRange minimum="0.00" maximum="9999.99" />
+				</p:inputText>
+
+				<p:outputLabel for="CdForProdNovo" value="Fornecedor:" />
+				<p:selectOneMenu id="CdForProdNovo"
+					value="#{MBProduto.produto.fornecedor.idfornecedor}" filter="true"
+					required="true" requiredMessage="O Campo Fornecedor é Obrigatório.">
+					<f:selectItem itemValue="" itemLabel="Selecione um Fornecedor" />
+					<f:selectItems value="#{MBProduto.comboFornecedor}" var="item"
+						itemValue="#{item.idfornecedor}" itemLabel="#{item.nome}" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+				<p:commandButton value="Gravar" actionListener="#{MBProduto.novo()}"
+					update=":msgGlobal :frmProdNovo" id="but" />
+				<p:commandButton value="Cancelar" id="but2"
+					action="/paginas/indexGeral.xhtml?faces-redirect=true" ajax="false"
+					immediate="true" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="rodape">
+		<ui:include src="/includes/rodape.xhtml" />
+	</ui:define>
+
+</ui:composition>

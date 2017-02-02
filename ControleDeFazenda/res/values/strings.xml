@@ -1,0 +1,52 @@
+<resources>
+
+    <string name="app_name">ControleDeFazenda</string>
+
+    <string name="cadFunc">Funcionário</string>
+
+    <string name="cadInsu">Insumo</string>
+
+    <string name="cadFaz">Fazenda</string>
+
+    <string name="listFaz">Listar</string>
+
+    <string name="radMasc">Masculino</string>
+
+    <string name="radFem">Feminino</string>
+
+    <string name="txtMatricula"></string>
+
+    <string name="txtNome"></string>
+
+    <string name="txtDataNascimento"></string>
+
+    <string name="lblMasculino">Masculino</string>
+
+    <string name="lblFeminino">Feminino</string>
+
+    <string name="itemRemover">Remover</string>
+
+    <string name="itemAlterar">Alterar</string>
+
+    <string name="itemInserir">Inserir</string>
+
+    <string name="itemCancelar">Cancelar</string>
+
+    <string name="itemConfirmar">Confirmar</string>
+    <string name="lblJanelaConfirmacao">Janela de Confirmação</string>
+    <string name="lblConfirmaRemocaoFazenda">Confirma remoção da fazenda?</string>
+    <string name="lblConfirmaRemocaoInsumo">Confirma remoção do insumo?</string>
+    <string name="lblConfirmaRemocaoFuncionario">Confirma remoção do funcionário?</string>
+    <string name="lblSim">SIM</string>
+    <string name="lblNao">NÃO</string>
+    <string name="lblCancelar">CANCELAR</string>
+    <string name="lblMensagemOk">Alterado com Sucesso!</string>
+    <string name="lblMensagemCancelada">Cancelado</string>
+    <string name="txtCodigo"></string>
+    <string name="lblCodigoInsumo"></string>
+    <string name="lblDescricaoInsumo"></string>
+    <string name="lblDescricaoAbreviadaInsumo"></string>
+    <string name="lblUnidadeMedidaInsumo"></string>
+    <string name="lblQtdeDisponivelInsumo"></string>
+
+</resources>

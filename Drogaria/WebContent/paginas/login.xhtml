@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Login</title>
+</h:head>
+<h:body>
+	<p:growl id="msgGlobal" life="6000" />
+	<h:form>
+		<p:graphicImage library="images" name="images.jpg" width="1000"
+			height="400" />
+		<p:panelGrid columns="2">
+			<p:commandButton value="Login" onclick="login.show();" />
+			<p:commandButton value="Sobre" onclick="sobre.show(); " />
+		</p:panelGrid>
+	</h:form>
+
+	<p:dialog widgetVar="login" header="Login" modal="true"
+		closable="false" resizable="false" draggable="false"
+		appendTo="@(body)">
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputText value="Usuário:" for="usuario" />
+				<h:inputText id="usuario" value="#{MBLogin.login}" required="true" />
+				<h:outputText value="Senha:" for="senha" />
+				<h:inputSecret id="senha" value="#{MBLogin.senha}" required="true" />
+				<h:commandButton value="Login" action="#{MBLogin.login1}"
+					update=":msgGlobal" />
+				<h:commandButton value="Cancel" onclick="login.hide();" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+
+	<p:dialog widgetVar="sobre" header="Sobre" modal="true"
+		closable="false" resizable="false" draggable="false"
+		appendTo="@(body)">
+		<h:form>
+			<p:panelGrid columns="1">
+				<p:graphicImage library="images" name="fema.png" width="600"
+					height="150" />
+				<h:outputText value="Sistema de Drogaria" />
+
+
+				<h:outputText
+					value="Trabalho Apresentado com parte da nota da materia de Engenharia de Software." />
+
+
+				<h:outputText value="Para mais informações." />
+
+				<h:outputText value="E-mail: viictor_maattos@hotmail.com" />
+				<h:outputText value="Celular:(18)99701-6874" />
+				<p:commandButton value="Voltar"
+					onclick="sobre.hide();" />
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+
+</h:body>
+</html>

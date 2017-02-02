@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/modeloPrincipal.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="menuladoe">
+		<ui:include src="/includes/itensGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="menuladod">
+		<h3>Lista de Filiais</h3>
+		<h:form id="frmFilListagem">
+			<p:dataTable id="tblFilial" widgetVar="tabelaFilial"
+				emptyMessage="Nenhum Filial Encontrado!" value="#{MBFilial.itens}"
+				var="item" filteredValue="#{MBFilial.itensFiltrados}"
+				paginator="true" rows="10">
+
+				<f:facet name="header">
+				       Lista de Filiais
+				</f:facet>
+				<p:column style="font-size:13px;" headerText="Código"
+					sortBy="#{item.idfilial}" filterBy="#{item.idfilial}">
+					<h:outputText value="#{item.idfilial}" />
+				</p:column>
+
+				<p:column style="font-size:13px;" headerText="Nome"
+					sortBy="#{item.nome}" filterBy="#{item.nome}">
+					<h:outputText value="#{item.nome}" />
+				</p:column>
+
+				<p:column style="font-size:13px;" headerText="CPF"
+					sortBy="#{item.cidade}" filterBy="#{item.cidade}">
+					<h:outputText value="#{item.cidade}" />
+				</p:column>
+
+				<p:column style="font-size:13px;" headerText="Opções">
+					<p:commandButton icon="ui-icon-plusthick"
+						oncomplete="PF('dlgFilMais').show();"
+						update=":frmFilMais:pnlFilMais">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBFilial.filial}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-pencil"
+						oncomplete="PF('dlgFilEditar').show();"
+						update=":frmFilEditar:pnlFilEditar">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBFilial.filial}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgFilExcluir').show();"
+						update=":frmFilExcluir:pnlFilExcluir">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBFilial.filial}" />
+					</p:commandButton>
+
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog widgetVar="dlgFilMais" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Filial - Informações">
+			<h:form id="frmFilMais">
+				<p:panelGrid id="pnlFilMais" columns="2">
+					<h:outputText value="Código:" />
+					<h:outputText value="#{MBFilial.filial.idfilial}" />
+
+					<h:outputText value="Nome:" />
+					<h:outputText value="#{MBFilial.filial.nome}" />
+
+					<h:outputText value="Rua:" />
+					<h:outputText value="#{MBFilial.filial.rua}" />
+
+					<h:outputText value="Bairro:" />
+					<h:outputText value="#{MBFilial.filial.bairro}" />
+
+					<h:outputText value="Cidade:" />
+					<h:outputText value="#{MBFilial.filial.cidade}" />
+
+					<h:outputText value="Estado:" />
+					<h:outputText value="#{MBFilial.filial.estado}" />
+
+					<h:outputText value="Telefone:" />
+					<h:outputText value="#{MBFilial.filial.telefone}" />
+
+					<h:outputText value="Email:" />
+					<h:outputText value="#{MBFilial.filial.email}" />
+
+					<h:outputText value="Fax:" />
+					<h:outputText value="#{MBFilial.filial.fax}" />
+
+				</p:panelGrid>
+
+				<p:commandButton value="Cancelar" id="centralizar"
+					style="margin-left:60px;margin-top:10px;"
+					onclick="PF('dlgFilMais').hide();" />
+			</h:form>
+
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgFilExcluir" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Filial - Exluir">
+			<h:form id="frmFilExcluir">
+				<p:panelGrid id="pnlFilExcluir" columns="2">
+					<h:outputText value="Código:" />
+					<h:outputText value="#{MBFilial.filial.idfilial}" />
+
+					<h:outputText value="Nome:" />
+					<h:outputText value="#{MBFilial.filial.nome}" />
+
+					<h:outputText value="Cidade:" />
+					<h:outputText value="#{MBFilial.filial.cidade}" />
+
+					<p:commandButton value="Excluir"
+						actionListener="#{MBFilial.excluir}"
+						oncomplete="PF('dlgFilExcluir').hide(); tabelaFilial.clearFilters();"
+						update=":frmFilListagem:tblFilial :msgGlobal" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgFilExcluir').hide();" />
+				</p:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgFilEditar" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Filial - Editar">
+			<h:form id="frmFilEditar">
+				<p:panelGrid columns="2" id="pnlFilEditar">
+
+					<h:outputText value="Código:" />
+					<h:outputText value="#{MBFilial.filial.idfilial}" />
+
+					<p:outputLabel for="txtNomeFiliNovo" value="Nome: " />
+					<p:inputText id="txtNomeFiliNovo" maxlength="50" size="30"
+						value="#{MBFilial.filial.nome}" required="true"
+						requiredMessage="O Campo Nome é Obrigatório." />
+
+					<p:outputLabel for="txtEndeFiliNovo" value="Endereço: " />
+					<p:inputText id="txtEndeFiliNovo" maxlength="50" size="30"
+						value="#{MBFilial.filial.rua}" required="true"
+						requiredMessage="O Campo Endereço é Obrigatório." />
+
+					<p:outputLabel for="txtNumFiliNovo" value="Número: " />
+					<p:inputText maxlength="5" size="7" id="txtNumFiliNovo"
+						value="#{MBFilial.filial.numero}" required="true"
+						requiredMessage="O Campo Número é Obrigatório." />
+
+					<p:outputLabel for="txtBarFiliNovo" value="Bairro: " />
+					<p:inputText maxlength="50" size="30" id="txtBarFiliNovo"
+						value="#{MBFilial.filial.bairro}" required="true"
+						requiredMessage="O Campo Bairro é Obrigatório." />
+
+					<p:outputLabel for="txtCidFiliNovo" value="Cidade: " />
+					<p:inputText maxlength="30" size="30" id="txtCidFiliNovo"
+						value="#{MBFilial.filial.cidade}" required="true"
+						requiredMessage="O Campo Bairro é Obrigatório." />
+
+					<p:outputLabel for="txtEstFiliNovo" value="Estado: " />
+					<p:inputText maxlength="2" size="3" id="txtEstFiliNovo"
+						value="#{MBFilial.filial.estado}" required="true"
+						requiredMessage="O Campo Estado é Obrigatório." />
+
+					<p:outputLabel for="txtTelFiliNovo" value="Telefone: " />
+					<p:inputMask id="txtTelFiliNovo" mask="(99)9999-9999"
+						maxlength="13" size="15" value="#{MBFilial.filial.telefone}"
+						required="true" requiredMessage="O Campo Telefone é Obrigatório." />
+
+					<p:outputLabel value="E-mail: " />
+					<p:inputText maxlength="45" size="50"
+						value="#{MBFilial.filial.email}" />
+
+					<p:outputLabel value="Fax: " />
+					<p:inputMask mask="(99)9999-9999" maxlength="13" size="15"
+						value="#{MBFilial.filial.fax}" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="2" style="margin-left:130px;margin-top:10px;">
+					<p:commandButton value="Editar" actionListener="#{MBFilial.editar}"
+						update=":frmFilListagem:tblFilial :msgGlobal"
+						onclick="PF('dlgFilEditar').hide();" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgFilEditar').hide();">
+						<p:resetInput target="pnlFilEditar" />
+					</p:commandButton>
+
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+	<ui:define name="rodape">
+		<ui:include src="/includes/rodape.xhtml" />
+	</ui:define>
+
+</ui:composition>

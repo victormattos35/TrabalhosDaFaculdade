@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/modeloSistema.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="frmFabListagem">
+			<p:dataTable id="tblFabricantes" widgetVar="tabelaFabricantes"
+				emptyMessage="Nenhum Fabricante Encontrado!"
+				value="#{MBFabricante.itens}" var="item"
+				filteredValue="#{MBFabricante.itensFiltrados}" paginator="true"
+				rows="10">
+
+				<f:facet name="header">
+				       Fabricante - Listagem				 
+				</f:facet>
+				<p:column headerText="Código" sortBy="#{item.codigo}"
+					filterBy="#{item.codigo}">
+					<h:outputText value="#{item.codigo}" />
+				</p:column>
+
+				<p:column headerText="Descrição" sortBy="#{item.descricao}"
+					filterBy="#{item.descricao}">
+					<h:outputText value="#{item.descricao}" />
+				</p:column>
+
+				<p:column headerText="Endereço" sortBy="#{item.endereco}"
+					filterBy="#{item.endereco}">
+					<h:outputText value="#{item.endereco}" />
+				</p:column>
+
+				<p:column headerText="Número" sortBy="#{item.numero}"
+					filterBy="#{item.numero}">
+					<h:outputText value="#{item.numero}" />
+				</p:column>
+
+				<p:column headerText="Cidade" sortBy="#{item.cidade}"
+					filterBy="#{item.cidade}">
+					<h:outputText value="#{item.cidade}" />
+				</p:column>
+
+				<p:column headerText="Estado" sortBy="#{item.estado}"
+					filterBy="#{item.estado}">
+					<h:outputText value="#{item.estado}" />
+				</p:column>
+
+				<p:column headerText="Telefone" sortBy="#{item.telefone}"
+					filterBy="#{item.telefone}">
+					<h:outputText value="#{item.telefone}" />
+				</p:column>
+				<f:facet name="footer">
+					 <h:commandLink>
+						<p:graphicImage library="images" name="pdf.png" width="24" />
+						<p:dataExporter type="pdf" target="tblFabricantes" fileName="item"
+							encoding="ISO-8859-1" />
+					</h:commandLink>
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

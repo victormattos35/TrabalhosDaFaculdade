@@ -1,0 +1,320 @@
+body{
+	background-color: #000000;
+}
+#all {
+	width: 1050px;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: futura;
+	background-color: white;
+	padding: 20px; 
+	border: 1px solid #999999;
+}
+
+#header {
+	padding: 0px;
+	padding-top: 10px;
+	border-bottom: 1px solid #999999;
+	padding-top: 10px;
+}
+
+#menu {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#menuLink {
+	color: #999999;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 20px;
+	padding-right: 20px;
+	text-decoration: none;
+}
+
+#menuLink:HOVER {
+	color: #303030;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 20px;
+	padding-right: 20px;
+	text-decoration: none;
+	background-color: #999999;
+	border-bottom: 1px solid #999999;
+}
+
+span {
+	color: black;
+}
+
+th{
+	font-size: 20px;
+	height: 33px;
+	font-weight: normal;
+	border-bottom: 1px solid #999999;
+	text-align: left;
+	margin-bottom: 10px;
+	width: 
+}
+
+h2{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border-bottom: 1px solid #999999;
+	
+}
+
+#info {
+	margin: auto;
+	width: 100%;
+	height: 20px;
+	color: #999999;
+	border-top: 1px solid #999999;
+	font-size: 12px;
+	padding-right: 0px;
+	padding-left: 0px;
+	padding-top: 0px;
+	margin-top: 0px;
+}
+
+#rightFoot {
+	text-align: right;
+}
+
+#text {
+	max-width: 150px;
+	position: relative;
+	margin-left: 0px;
+	margin-right: auto;
+	float: left;
+	width: 150px;
+	padding: 10px;
+	margin-bottom: 30px;
+}
+
+#conteudo {
+	max-width: 800px;
+	position: relative;
+	margin-right: 0px;
+	margin-left: auto;
+	float: right;
+	width: 800px;
+	margin: auto;
+	padding-top: 20px;
+	margin-bottom: 30px;
+}
+
+#icon {
+	max-height: 50px;
+	max-width: 50px;
+}
+
+#link {
+	margin-left: auto;
+	margin-right: 0px;
+	color: #999999;
+	text-decoration: none;
+}
+
+#socialBox {
+	padding-top: 30px;
+	padding-bottom: 30px;
+	margin: auto;
+}
+
+#socialBox > table {
+	margin: auto;
+	width: 100px;
+}
+
+#socialBox > table > tr > td{
+	height: auto;
+	width: auto;
+}
+
+#links{
+	color: #999999;
+	text-decoration: none;
+}
+
+#imgN{
+	height: 600px;
+	width: 600px;
+	margin-left: 30px;
+	margin-right: 30px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border: 1px solid black;
+}
+
+#camp{
+	height: 20px;
+	width: 500px;
+	border: 1px solid black;
+}
+
+#camp2{
+	height: 100px;
+	width: 500px;
+	border: 1px solid black;
+}
+
+#but{
+	position: relative;
+	left: 0px;
+	width: 100px;
+	height: 30px;
+	background-color: gray;
+	border: none;
+	color: white;
+	font-family: futura;
+	font-size: 15px;
+	margin-top: 10px;
+}
+
+#but2{
+	position: relative;
+	left: 50px;
+	width: 100px;
+	height: 30px;
+	background-color: gray;
+	border: none;
+	color: white;
+	font-family: futura;
+	font-size: 15px;
+	margin-top: 10px;
+}
+
+#camp:HOVER{
+	height: 20px;
+	width: 500px;
+	border: 1px solid #505050;
+	background-color: #999999;
+}
+
+#camp2:HOVER{
+	height: 100px;
+	width: 500px;
+	border: 1px solid #505050;
+	
+}
+
+#but:HOVER{
+	position: relative;
+	left: 0px;
+	width: 105px;
+	height: 30px;
+	background-color: black;
+	border: none;
+	color: white;
+	font-family: futura;
+	font-size: 15px;
+}
+
+#but2:HOVER{
+	position: relative;
+	left: 50px;
+	width: 105px;
+	height: 30px;
+	background-color: black;
+	border: none;
+	color: white;
+	font-family: futura;
+	font-size: 15px;
+}
+
+.ui-widget, .ui-widget, .ui-widget{
+	font-size: 12px !important;
+}
+
+.ui-datatable {  
+    font-size: 11px !important;  
+}
+
+#centralizar{
+	text-align: center;
+}
+
+
+#principal {
+	background-color: #FFFFFF;
+	float: left;
+	width: 520px;
+	height: 250px;
+	border: 2px solid #6495ED;
+	margin-top: 15%;
+	margin-left: 30%;
+	margin-right: 15%;
+	margin-bottom: 15%;
+	text-align: center;
+	font-family: calibri;
+	font-size: 13px;
+	border-radius: 50px;
+}
+
+#msg1 {
+	padding: 10px;
+	font-family: Cambria;
+	font-size: 21px;
+	color: #000000;
+	text-align: center;
+}
+
+#msg2 {
+	padding: 5px;
+	font-family: Cambria;
+	font-size: 21px;
+	color: #000000;
+	text-align: center;
+}
+
+#usuario {
+	color: #000000;
+}
+#senha {
+	color: #000000;
+}
+
+#esquerda {
+	margin-right:auto;
+	margin-left: 0px;
+	float: left;
+    padding: 10px;
+    height: 100px;
+    width:500px;
+    text-align: center;
+}
+
+#button{
+	max-width: 800px;
+	margin-right: 0px;
+	margin-left: auto;
+	position: relative;
+	float: right;
+    width:800px;
+    margin: auto;
+    padding-top: 20px;
+	margin-bottom: 30px;
+	padding-left:100px;
+}
+
+#botaorelatorio{
+	margin-top: 20px;
+	margin-left: 350px;
+	position: relative;
+	left: 0px;
+	background-color: gray;
+	color: white;
+	font-family: futura;
+	font-size: 15px;
+}
+
+#botaorelatorio:HOVER{
+	position: relative;
+	left: 0px;
+	background-color: black;
+	color: white;
+	font-family: futura;
+	font-size: 15px;
+}
+

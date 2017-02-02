@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/modeloPrincipal.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="menuladoe">
+		<ui:include src="/includes/itensGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+	</ui:define>
+
+	<ui:define name="menuladod">
+		<h:form id="frmNovoCliente">
+			<h3>Cadastro de Cliente</h3>
+			<h:panelGrid id="pnlCliNovo" columns="2">
+				<p:outputLabel for="txtNomeCliNovo" value="Nome: " />
+				<p:inputText id="txtNomeCliNovo" maxlength="50" size="30"
+					value="#{MBCliente.cliente.nome}" required="true"
+					requiredMessage="O Campo Nome é Obrigatório." />
+
+				<p:outputLabel for="txtCpfCliNovo" value="CPF: " />
+				<p:inputMask id="txtCpfCliNovo" mask="999.999.999-99"
+					value="#{MBCliente.cliente.cpf}" required="true"
+					requiredMessage="O Campo CPF é Obrigatório." />
+
+				<p:outputLabel for="txtSenhaCliNovo" value="Senha: " />
+				<p:password id="txtSenhaCliNovo" maxlength="10" size="15"
+					value="#{MBCliente.cliente.senha}" required="true"
+					requiredMessage="O Campo Senha é Obrigatório." />
+
+				<p:outputLabel value="Telefone: " />
+				<p:inputMask mask="(99)9999-9999" maxlength="13" size="15"
+					value="#{MBCliente.cliente.telefone}" />
+
+				<p:outputLabel value="Celular: " />
+				<p:inputMask mask="(99)99999-9999" maxlength="13" size="15"
+					value="#{MBCliente.cliente.celular}" />
+
+				<p:outputLabel value="E-mail: " />
+				<p:inputText maxlength="45" size="50"
+					value="#{MBCliente.cliente.email}" />
+
+				<p:outputLabel value="CEP: " />
+				<p:inputMask mask="99.999-999" size="15"
+					value="#{MBCliente.cliente.cep}" />
+
+				<p:outputLabel value="Endereço: " />
+				<p:inputText maxlength="50" size="30"
+					value="#{MBCliente.cliente.rua}" />
+
+				<p:outputLabel value="Número: " />
+				<p:inputText maxlength="5" size="7"
+					value="#{MBCliente.cliente.numero}" />
+
+				<p:outputLabel value="Bairro: " />
+				<p:inputText maxlength="50" size="30"
+					value="#{MBCliente.cliente.bairro}" />
+
+				<p:outputLabel value="Complemento: " />
+				<p:inputText maxlength="30" size="30"
+					value="#{MBCliente.cliente.complemento}" />
+
+				<p:outputLabel value="Cidade: " />
+				<p:inputText maxlength="30" size="30"
+					value="#{MBCliente.cliente.cidade}" />
+
+				<p:outputLabel value="Estado: " />
+				<p:inputText maxlength="2" size="3"
+					value="#{MBCliente.cliente.estado}" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="2">
+				<p:commandButton value="Gravar" actionListener="#{MBCliente.novo()}"
+					update=":msgGlobal :frmNovoCliente" id="but" />
+				<p:commandButton value="Cancelar" id="but2"
+					action="/paginas/indexGeral.xhtml?faces-redirect=true" ajax="false"
+					immediate="true" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="rodape">
+		<ui:include src="/includes/rodape.xhtml" />
+	</ui:define>
+
+</ui:composition>

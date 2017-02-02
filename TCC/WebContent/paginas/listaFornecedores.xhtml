@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/modeloPrincipal.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="menuladoe">
+		<ui:include src="/includes/itensGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="menuladod">
+		<h3>Lista de Fornecedores</h3>
+		<h:form id="frmForListagem">
+			<p:dataTable id="tblFornecedor" widgetVar="tabelaFornecedor"
+				emptyMessage="Nenhum Fornecedor Encontrado!"
+				value="#{MBFornecedor.itens}" var="item"
+				filteredValue="#{MBFornecedor.itensFiltrados}" paginator="true"
+				rows="10">
+
+				<f:facet name="header">
+				       Lista de Fornecedores
+				</f:facet>
+				<p:column style="font-size:13px;" headerText="Código"
+					sortBy="#{item.idfornecedor}" filterBy="#{item.idfornecedor}">
+					<h:outputText value="#{item.idfornecedor}" />
+				</p:column>
+
+				<p:column style="font-size:13px;" headerText="Nome"
+					sortBy="#{item.nome}" filterBy="#{item.nome}">
+					<h:outputText value="#{item.nome}" />
+				</p:column>
+
+				<p:column style="font-size:13px;" headerText="CNPJ">
+					<h:outputText value="#{item.cnpj}" />
+				</p:column>
+
+				<p:column style="font-size:13px;" headerText="Opções">
+					<p:commandButton icon="ui-icon-plusthick"
+						oncomplete="PF('dlgForMais').show();"
+						update=":frmForMais:pnlForMais">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBFornecedor.fornecedor}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-pencil"
+						oncomplete="PF('dlgForEditar').show();"
+						update=":frmForEditar:pnlForEditar">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBFornecedor.fornecedor}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgForExcluir').show();"
+						update=":frmForExcluir:pnlForExcluir">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBFornecedor.fornecedor}" />
+					</p:commandButton>
+
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog widgetVar="dlgForMais" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Fornecedor - Informações">
+			<h:form id="frmForMais">
+				<p:panelGrid id="pnlForMais" columns="2">
+					<h:outputText value="Código:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.idfornecedor}" />
+
+					<h:outputText value="Nome:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.nome}" />
+
+					<h:outputText value="CNPJ:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.cnpj}" />
+
+					<h:outputText value="Endereço:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.rua}" />
+
+					<h:outputText value="Número:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.numero}" />
+
+					<h:outputText value="Bairro:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.bairro}" />
+
+					<h:outputText value="Cidade:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.cidade}" />
+
+					<h:outputText value="Estado:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.estado}" />
+
+					<h:outputText value="Telefone:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.telefone}" />
+
+					<h:outputText value="Fax:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.fax}" />
+
+					<h:outputText value="E-mail:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.email}" />
+
+				</p:panelGrid>
+
+				<p:commandButton value="Cancelar" id="centralizar"
+					style="margin-left:60px;margin-top:10px;"
+					onclick="PF('dlgForMais').hide();" />
+			</h:form>
+
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgForExcluir" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Fornecedor - Exluir">
+			<h:form id="frmForExcluir">
+				<p:panelGrid id="pnlForExcluir" columns="2">
+					<h:outputText value="Código:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.idfornecedor}" />
+
+					<h:outputText value="Nome:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.nome}" />
+
+					<h:outputText value="CNPJ:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.cnpj}" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBFornecedor.excluir}"
+						oncomplete="PF('dlgForExcluir').hide(); tabelaFornecedor.clearFilters();"
+						update=":frmForListagem:tblFornecedor :msgGlobal" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgForExcluir').hide();" />
+				</p:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgForEditar" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Fornecedor - Editar">
+			<h:form id="frmForEditar">
+				<p:panelGrid columns="2" id="pnlForEditar">
+
+					<h:outputText value="Código:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.idfornecedor}" />
+
+					<p:outputLabel for="txtNomeForNovo" value="Nome: " />
+					<p:inputText id="txtNomeForNovo" maxlength="50" size="30"
+						value="#{MBFornecedor.fornecedor.nome}" required="true"
+						requiredMessage="O Campo Nome é Obrigatório." />
+
+					<p:outputLabel for="txtCpfForNovo" value="CNPJ: " />
+					<p:inputMask id="txtCpfForNovo" mask="99.999.999/9999-99"
+						value="#{MBFornecedor.fornecedor.cnpj}" required="true"
+						requiredMessage="O Campo CNPJ é Obrigatório." />
+
+					<p:outputLabel value="Endereço: " />
+					<p:inputText maxlength="50" size="30"
+						value="#{MBFornecedor.fornecedor.rua}" />
+
+					<p:outputLabel value="Número: " />
+					<p:inputText maxlength="5" size="7"
+						value="#{MBFornecedor.fornecedor.numero}" />
+
+					<p:outputLabel value="Bairro: " />
+					<p:inputText maxlength="50" size="30"
+						value="#{MBFornecedor.fornecedor.bairro}" />
+
+					<p:outputLabel value="Cidade: " />
+					<p:inputText maxlength="30" size="30"
+						value="#{MBFornecedor.fornecedor.cidade}" />
+
+					<p:outputLabel value="Estado: " />
+					<p:inputText maxlength="2" size="3"
+						value="#{MBFornecedor.fornecedor.estado}" />
+
+					<p:outputLabel value="Telefone: " />
+					<p:inputMask mask="(99)9999-9999" maxlength="13" size="15"
+						value="#{MBFornecedor.fornecedor.telefone}" />
+
+					<p:outputLabel value="Fax: " />
+					<p:inputMask mask="(99)9999-9999" maxlength="13" size="15"
+						value="#{MBFornecedor.fornecedor.fax}" />
+
+					<p:outputLabel value="E-mail: " />
+					<p:inputText maxlength="45" size="50"
+						value="#{MBFornecedor.fornecedor.email}" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="2" style="margin-left:130px;margin-top:10px;">
+					<p:commandButton value="Editar"
+						actionListener="#{MBFornecedor.editar}"
+						update=":frmForListagem:tblFornecedor :msgGlobal"
+						onclick="PF('dlgForEditar').hide();" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgForEditar').hide();">
+						<p:resetInput target="pnlForEditar" />
+					</p:commandButton>
+
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+
+	<ui:define name="rodape">
+		<ui:include src="/includes/rodape.xhtml" />
+	</ui:define>
+
+</ui:composition>

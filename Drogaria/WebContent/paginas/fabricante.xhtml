@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/modeloSistema.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="frmFabListagem">
+			<p:dataTable id="tblFabricantes" widgetVar="tabelaFabricantes"
+				emptyMessage="Nenhum Fabricante Encontrado!"
+				value="#{MBFabricante.itens}" var="item"
+				filteredValue="#{MBFabricante.itensFiltrados}" paginator="true"
+				rows="10">
+
+				<f:facet name="header">
+				       Fabricante - Listagem
+				</f:facet>
+				<p:column headerText="Código" sortBy="#{item.codigo}"
+					filterBy="#{item.codigo}">
+					<h:outputText value="#{item.codigo}" />
+				</p:column>
+
+				<p:column headerText="Descrição" sortBy="#{item.descricao}"
+					filterBy="#{item.descricao}">
+					<h:outputText value="#{item.descricao}" />
+				</p:column>
+
+				<p:column headerText="Endereço" sortBy="#{item.endereco}"
+					filterBy="#{item.endereco}">
+					<h:outputText value="#{item.endereco}" />
+				</p:column>
+
+				<p:column headerText="Número" sortBy="#{item.numero}"
+					filterBy="#{item.numero}">
+					<h:outputText value="#{item.numero}" />
+				</p:column>
+
+				<p:column headerText="Cidade" sortBy="#{item.cidade}"
+					filterBy="#{item.cidade}">
+					<h:outputText value="#{item.cidade}" />
+				</p:column>
+
+				<p:column headerText="Estado" sortBy="#{item.estado}"
+					filterBy="#{item.estado}">
+					<h:outputText value="#{item.estado}" />
+				</p:column>
+
+				<p:column headerText="Telefone" sortBy="#{item.telefone}"
+					filterBy="#{item.telefone}">
+					<h:outputText value="#{item.telefone}" />
+				</p:column>
+				<p:column headerText="Opções" exportable="false">
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgFabExcluir').show();"
+						update=":frmFabExcluir:pnlFabExcluir">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBFabricante.fabricante}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-pencil"
+						oncomplete="PF('dlgFabEditar').show();"
+						update=":frmFabEditar:pnlFabEditar">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBFabricante.fabricante}" />
+					</p:commandButton>
+				</p:column>
+
+				<f:facet name="footer">
+					<p:commandButton value="Novo"
+						actionListener="#{MBFabricante.prepararNovo}"
+						oncomplete="PF('dlgFabNovo').show();"
+						update=":frmFabNovo:pnlFabNovo" />
+					<p:commandButton value="Voltar ao Menu Principal"
+						action="/paginas/principal.xhtml" />
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog widgetVar="dlgFabNovo" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Fabricante - Novo">
+			<h:form id="frmFabNovo">
+				<h:panelGrid id="pnlFabNovo" columns="2">
+					<p:outputLabel for="txtDescFabNovo" value="Descrição: " />
+					<p:inputText id="txtDescFabNovo" maxlength="50" size="30"
+						value="#{MBFabricante.fabricante.descricao}" required="true"
+						requiredMessage="O Campo Descrição é Obrigatório." />
+
+					<p:outputLabel for="txtEndFabNovo" value="Endereço: " />
+					<p:inputText id="txtEndFabNovo" maxlength="50" size="30"
+						value="#{MBFabricante.fabricante.endereco}" required="true"
+						requiredMessage="O Campo Endereço é Obrigatório." />
+
+					<p:outputLabel for="txtNumFabNovo" value="Número: " />
+					<p:inputText id="txtNumFabNovo" maxlength="5" size="7"
+						value="#{MBFabricante.fabricante.numero}" required="true"
+						requiredMessage="O Campo Número é Obrigatório." />
+
+					<p:outputLabel for="txtCidFabNovo" value="Cidade: " />
+					<p:inputText id="txtCidFabNovo" maxlength="30" size="30"
+						value="#{MBFabricante.fabricante.cidade}" required="true"
+						requiredMessage="O Campo Cidade é Obrigatório." />
+
+					<p:outputLabel for="txtEstFabNovo" value="Estado: " />
+					<p:inputText id="txtEstFabNovo" maxlength="2" size="3"
+						value="#{MBFabricante.fabricante.estado}" required="true"
+						requiredMessage="O Campo Estado é Obrigatório." />
+
+					<p:outputLabel for="txtTelFabNovo" value="Telefone: " />
+					<p:inputMask mask="(99)9999-9999" id="txtTelFabNovo"
+						maxlength="13" size="15" value="#{MBFabricante.fabricante.telefone}"
+						required="true" requiredMessage="O Campo Celular é Obrigatório." />
+
+
+
+				</h:panelGrid>
+
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Gravar"
+						actionListener="#{MBFabricante.novo}"
+						oncomplete="verificar(xhr, status, args, 'dlgFabNovo', 'tabelaFabricantes')"
+						update=":frmFabListagem:tblFabricantes :msgGlobal" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgFabNovo').hide();">
+						<p:resetInput target="pnlFabNovo" />
+					</p:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgFabExcluir" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Fabricante - Exluir">
+			<h:form id="frmFabExcluir">
+				<p:panelGrid id="pnlFabExcluir" columns="2">
+					<h:outputText value="Código:" />
+					<h:outputText value="#{MBFabricante.fabricante.codigo}" />
+
+					<h:outputText value="Descricao:" />
+					<h:outputText value="#{MBFabricante.fabricante.descricao}" />
+					
+					<h:outputText value="Endereço:" />
+					<h:outputText value="#{MBFabricante.fabricante.endereco}" />
+					
+					<h:outputText value="Número:" />
+					<h:outputText value="#{MBFabricante.fabricante.numero}" />
+					
+					<h:outputText value="Cidade:" />
+					<h:outputText value="#{MBFabricante.fabricante.cidade}" />
+					
+					<h:outputText value="Estado:" />
+					<h:outputText value="#{MBFabricante.fabricante.estado}" />
+					
+					<h:outputText value="Telefone:" />
+					<h:outputText value="#{MBFabricante.fabricante.telefone}" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBFabricante.excluir}"
+						oncomplete="PF('dlgFabExcluir').hide(); tabelaFabricantes.clearFilters();"
+						update=":frmFabListagem:tblFabricantes :msgGlobal" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgFabExcluir').hide();" />
+				</p:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgFabEditar" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Fabricante - Editar">
+			<h:form id="frmFabEditar">
+				<p:panelGrid id="pnlFabEditar" columns="2">
+					<p:outputLabel value="Código" />
+					<h:outputText value="#{MBFabricante.fabricante.codigo}" />
+
+					<p:outputLabel for="txtDescFabEditar" value="Descrição: " />
+					<p:inputText id="txtDescFabEditar" maxlength="50" size="30"
+						value="#{MBFabricante.fabricante.descricao}" required="true"
+						requiredMessage="O Campo Descrição é Obrigatório." />
+
+					<p:outputLabel for="txtEndFabEditar" value="Endereço: " />
+					<p:inputText id="txtEndFabEditar" maxlength="50" size="30"
+						value="#{MBFabricante.fabricante.endereco}" required="true"
+						requiredMessage="O Campo Endereço é Obrigatório." />
+
+					<p:outputLabel for="txtNumFabEditar" value="Número: " />
+					<p:inputText id="txtNumFabEditar" maxlength="5" size="7"
+						value="#{MBFabricante.fabricante.numero}" required="true"
+						requiredMessage="O Campo Número é Obrigatório." />
+
+					<p:outputLabel for="txtCidFabEditar" value="Cidade: " />
+					<p:inputText id="txtCidFabEditar" maxlength="30" size="30"
+						value="#{MBFabricante.fabricante.cidade}" required="true"
+						requiredMessage="O Campo Cidade é Obrigatório." />
+
+					<p:outputLabel for="txtEstFabEditar" value="Estado: " />
+					<p:inputText id="txtEstFabEditar" maxlength="2" size="3"
+						value="#{MBFabricante.fabricante.estado}" required="true"
+						requiredMessage="O Campo Estado é Obrigatório." />
+
+					<p:outputLabel for="txtTelFabEditar" value="Telefone: " />
+					<p:inputMask mask="(99)9999-9999" id="txtTelFabEditar"
+						maxlength="13" size="15" value="#{MBFabricante.fabricante.telefone}"
+						required="true" requiredMessage="O Campo Celular é Obrigatório." />
+
+						
+				</p:panelGrid>
+				<p:panelGrid columns="2">
+					<p:commandButton value="Editar"
+						actionListener="#{MBFabricante.editar}"
+						oncomplete="verificar(xhr, status, args, 'dlgFabEditar', 'tabelaFabricantes')"
+						update=":frmFabListagem:tblFabricantes :msgGlobal" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgFabEditar').hide();">
+						<p:resetInput target="pnlFabEditar" />
+					</p:commandButton>
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

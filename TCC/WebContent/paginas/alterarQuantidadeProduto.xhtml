@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/modeloPrincipal.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="menuladoe">
+		<ui:include src="/includes/itensGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="menuladod">
+		<h3>Alterar Quantidade do Produto</h3>
+		<h:form id="frmProdListagem">
+			<p:dataTable id="tblProduto" widgetVar="tabelaProduto"
+				emptyMessage="Nenhum Produto Encontrado!" value="#{MBProduto.itens}"
+				var="item" filteredValue="#{MBProduto.itensFiltrados}"
+				paginator="true" rows="10">
+
+				<f:facet name="header">
+				       Lista de Produtos
+				</f:facet>
+				<p:column style="font-size:13px;" headerText="Código"
+					sortBy="#{item.idproduto}" filterBy="#{item.idproduto}">
+					<h:outputText value="#{item.idproduto}" />
+				</p:column>
+
+				<p:column style="font-size:13px;" headerText="Descrição"
+					sortBy="#{item.descricao}" filterBy="#{item.descricao}">
+					<h:outputText value="#{item.descricao}" />
+				</p:column>
+
+				<p:column style="font-size:13px;" headerText="Quantidade">
+					<h:outputText value="#{item.quantidade}" />
+				</p:column>
+
+				<p:column style="font-size:13px;" headerText="Opções">
+					<p:commandButton icon="ui-icon-pencil"
+						oncomplete="PF('dlgProdEditar').show();"
+						update=":frmProdEditar:pnlProdEditar">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBProduto.produto}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog widgetVar="dlgProdEditar" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Produto - Editar">
+			<h:form id="frmProdEditar">
+				<p:panelGrid columns="2" id="pnlProdEditar">
+					<h:outputText value="Código:" />
+					<h:outputText value="#{MBProduto.produto.idproduto}" />
+
+					<h:outputText value="Descrição:" />
+					<h:outputText value="#{MBProduto.produto.descricao}" />
+
+					<p:outputLabel value="Quantidade:" />
+					<p:inputText value="#{MBProduto.produto.quantidade}" />
+				</p:panelGrid>
+				<p:panelGrid columns="2" style="margin-top:10px;">
+					<p:commandButton value="Editar"
+						actionListener="#{MBProduto.editar}"
+						update=":frmProdListagem:tblProduto :msgGlobal"
+						onclick="PF('dlgProdEditar').hide();" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgProdEditar').hide();">
+						<p:resetInput target="pnlProdEditar" />
+					</p:commandButton>
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+
+	<ui:define name="rodape">
+		<ui:include src="/includes/rodape.xhtml" />
+	</ui:define>
+
+</ui:composition>

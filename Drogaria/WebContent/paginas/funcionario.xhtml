@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/modeloSistema.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="frmFunListagem">
+			<p:dataTable id="tblFuncionario" widgetVar="tabelaFuncionarios"
+				emptyMessage="Nenhum Funcionario Encontrado!"
+				value="#{MBFuncionario.itens}" var="item"
+				filteredValue="#{MBFuncionario.itensFiltrados}" paginator="true"
+				rows="10">
+
+
+				
+				<f:facet name="header">
+				       Funcionarios - Listagem
+				</f:facet>
+				<p:column headerText="Código" sortBy="#{item.codigo}"
+					filterBy="#{item.codigo}">
+					<h:outputText value="#{item.codigo}" />
+				</p:column>
+
+				<p:column headerText="Nome" sortBy="#{item.nome}"
+					filterBy="#{item.nome}">
+					<h:outputText value="#{item.nome}" />
+				</p:column>
+
+				<p:column headerText="CPF" sortBy="#{item.cpf}"
+					filterBy="#{item.cpf}">
+					<h:outputText value="#{item.cpf}" />
+				</p:column>
+
+				<p:column headerText="Senha" exportable="false">
+					<h:outputText value="#{item.senha}" />
+				</p:column>
+
+				<p:column headerText="Função" sortBy="#{item.funcao}"
+					filterBy="#{item.funcao}">
+					<h:outputText value="#{item.funcao}" />
+				</p:column>
+
+				<p:column headerText="Opções" exportable="false">
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgFunExcluir').show();"
+						update=":frmFunExcluir:pnlFunExcluir">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBFuncionario.funcionario}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-pencil"
+						oncomplete="PF('dlgFunEditar').show();"
+						update=":frmFunEditar:pnlFunEditar">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBFuncionario.funcionario}" />
+					</p:commandButton>
+				</p:column>
+
+				<f:facet name="footer">
+					<p:commandButton value="Novo"
+						actionListener="#{MBFuncionario.prepararNovo}"
+						oncomplete="PF('dlgFunNovo').show();"
+						update=":frmFunNovo:pnlFunNovo" />
+						<p:commandButton value="Voltar ao Menu Principal" action="/paginas/principal.xhtml"/>
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog widgetVar="dlgFunNovo" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Funcionario - Novo">
+			<h:form id="frmFunNovo">
+				<h:panelGrid id="pnlFunNovo" columns="2">
+					<p:outputLabel for="txtNomFunNovo" value="Descrição: " />
+					<p:inputText id="txtNomFunNovo" maxlength="50" size="30"
+						value="#{MBFuncionario.funcionario.nome}" required="true"
+						requiredMessage="O Campo Nome é Obrigatório." />
+
+					<p:outputLabel for="txtCpfFunNovo" value="CPF: " />
+					<p:inputMask mask="999.999.999-99" id="txtCpfFunNovo"
+						maxlength="50" size="30" value="#{MBFuncionario.funcionario.cpf}"
+						required="true" requiredMessage="O Campo CPF é Obrigatório." />
+
+					<p:outputLabel for="txtSenFunNovo" value="Senha: " />
+					<p:password id="txtSenFunNovo" maxlength="50" size="30"
+						value="#{MBFuncionario.funcionario.senha}" required="true"
+						requiredMessage="O Campo Senha é Obrigatório." />
+
+					<p:outputLabel for="txtFunFunNovo" value="Função: " />
+					<p:inputText id="txtFunFunNovo" maxlength="50" size="30"
+						value="#{MBFuncionario.funcionario.funcao}" required="true"
+						requiredMessage="O Campo Função é Obrigatório." />
+
+				</h:panelGrid>
+
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Gravar"
+						actionListener="#{MBFuncionario.novo}"
+						oncomplete="verificar(xhr, status, args, 'dlgFunNovo', 'tabelaFuncionarios')"
+						update=":frmFunListagem:tblFuncionario :msgGlobal" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgFunNovo').hide();">
+						<p:resetInput target="pnlFunNovo" />
+					</p:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgFunExcluir" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Funcionario - Exluir">
+			<h:form id="frmFunExcluir">
+				<p:panelGrid id="pnlFunExcluir" columns="2">
+					<h:outputText value="Código:" />
+					<h:outputText value="#{MBFuncionario.funcionario.codigo}" />
+
+					<h:outputText value="Nome:" />
+					<h:outputText value="#{MBFuncionario.funcionario.nome}" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBFuncionario.excluir}"
+						oncomplete="PF('dlgFunExcluir').hide(); tabelaFuncionarios.clearFilters();"
+						update=":frmFunListagem:tblFuncionario :msgGlobal" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgFunExcluir').hide();" />
+				</p:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgFunEditar" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Funcionarios - Editar">
+			<h:form id="frmFunEditar">
+				<p:panelGrid id="pnlFunEditar" columns="2">
+					<p:outputLabel value="Código" />
+					<h:outputText value="#{MBFuncionario.funcionario.codigo}" />
+
+					<p:outputLabel for="txtNomFunEditar" value="Nome:" />
+					<h:inputText id="txtNomFunEditar"
+						value="#{MBFuncionario.funcionario.nome}" required="true"
+						requiredMessage="O Campo Nome é Obrigatório." />
+
+					<p:outputLabel for="txtCpfFunEditar" value="CPF:" />
+					<p:inputMask mask="999.999.999-99" id="txtCpfFunEditar"
+						value="#{MBFuncionario.funcionario.cpf}" required="true"
+						requiredMessage="O Campo CPF é Obrigatório." />
+
+					<p:outputLabel for="txtFunFunSenha" value="Senha:" />
+					<p:password id="txtFunFunSenha"
+						value="#{MBFuncionario.funcionario.senha}" required="true"
+						requiredMessage="O Campo Senha é Obrigatório." />
+
+					<p:outputLabel for="txtFunFunEditar" value="Função:" />
+					<h:inputText id="txtFunFunEditar"
+						value="#{MBFuncionario.funcionario.funcao}" required="true"
+						requiredMessage="O Campo Função é Obrigatório." />
+
+
+				</p:panelGrid>
+				<p:panelGrid columns="2">
+					<p:commandButton value="Editar"
+						actionListener="#{MBFuncionario.editar}"
+						oncomplete="verificar(xhr, status, args, 'dlgFunEditar', 'tabelaFuncionarios')"
+						update=":frmFunListagem:tblFuncionario :msgGlobal" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgFunEditar').hide();">
+						<p:resetInput target="pnlFunEditar" />
+					</p:commandButton>
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

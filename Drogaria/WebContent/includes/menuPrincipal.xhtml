@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form>
+		<p:menubar>
+
+			<p:submenu label="Opções">
+				<p:menuitem value="Sair" outcome="/paginas/login.xhtml" />
+			</p:submenu>
+
+			<p:submenu label="Cadastros">
+				<p:menuitem value="Fabricantes" outcome="/paginas/fabricante.xhtml" />
+				<p:menuitem value="Produto" outcome="/paginas/produto.xhtml" />
+				<p:menuitem value="Cliente" outcome="/paginas/cliente.xhtml"/> 
+			</p:submenu>
+
+			<p:submenu label="Funcionarios">
+				<p:menuitem value="Funcionarios"
+					outcome="/paginas/funcionario.xhtml" />
+			</p:submenu>
+
+			<p:submenu label="Venda">
+				<p:menuitem value="Novo" outcome="/paginas/vendaCadastro.xhtml" actionListener="#{MBVenda.prepararFuncionario}" />
+			</p:submenu>
+			
+			<p:submenu label="Filiais">
+			<p:menuitem value="Filiais" outcome="/paginas/filiais.xhtml"/>
+			</p:submenu>
+			
+			<p:submenu label="Relatorios">
+			<p:menuitem value="Produto" outcome="/paginas/relatorioProduto.xhtml"/>
+			<p:menuitem value="Cliente" outcome="/paginas/relatorioCliente.xhtml"/>
+			<p:menuitem value="Filial" outcome="/paginas/relatorioFilial.xhtml"/>
+			<p:menuitem value="Funcionario" outcome="/paginas/relatorioFuncionario.xhtml"/>
+			<p:menuitem value="Fabricante" outcome="/paginas/relatorioFabricante.xhtml"/>
+			</p:submenu>
+			<p:submenu label="Ajuda">
+				<p:menuitem value="Sobre" outcome="/paginas/sobre.xhtml"/>
+			</p:submenu>
+
+
+		</p:menubar>
+
+	</h:form>
+</ui:composition>

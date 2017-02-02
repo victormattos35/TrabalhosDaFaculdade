@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/modeloPrincipal.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="menuladoe">
+		<ui:include src="/includes/itensGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="menuladod">
+		<h3>Lista de Clientes</h3>
+		<h:form id="frmCliListagem">
+			<p:dataTable id="tblCliente" widgetVar="tabelaCliente"
+				emptyMessage="Nenhum Cliente Encontrado!" value="#{MBCliente.itens}"
+				var="item" filteredValue="#{MBCliente.itensFiltrados}"
+				paginator="true" rows="10">
+
+				<f:facet name="header">
+				       Lista de Clientes
+				</f:facet>
+				<p:column style="font-size:13px;" headerText="Código"
+					sortBy="#{item.idcliente}" filterBy="#{item.idcliente}">
+					<h:outputText value="#{item.idcliente}" />
+				</p:column>
+
+				<p:column style="font-size:13px;" headerText="Nome"
+					sortBy="#{item.nome}" filterBy="#{item.nome}">
+					<h:outputText value="#{item.nome}" />
+				</p:column>
+
+				<p:column style="font-size:13px;" headerText="CPF"
+					sortBy="#{item.cpf}" filterBy="#{item.cpf}">
+					<h:outputText value="#{item.cpf}" />
+				</p:column>
+
+				<p:column style="font-size:13px;" headerText="Opções">
+					<p:commandButton icon="ui-icon-plusthick"
+						oncomplete="PF('dlgCliMais').show();"
+						update=":frmCliMais:pnlCliMais">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBCliente.cliente}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-pencil"
+						oncomplete="PF('dlgCliEditar').show();"
+						update=":frmCliEditar:pnlCliEditar">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBCliente.cliente}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgCliExcluir').show();"
+						update=":frmCliExcluir:pnlCliExcluir">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBCliente.cliente}" />
+					</p:commandButton>
+
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog widgetVar="dlgCliMais" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Cliente - Informações">
+			<h:form id="frmCliMais">
+				<p:panelGrid id="pnlCliMais" columns="2">
+					<h:outputText value="Código:" />
+					<h:outputText value="#{MBCliente.cliente.idcliente}" />
+
+					<h:outputText value="Nome:" />
+					<h:outputText value="#{MBCliente.cliente.nome}" />
+
+					<h:outputText value="CPF:" />
+					<h:outputText value="#{MBCliente.cliente.cpf}" />
+
+					<h:outputText value="Telefone:" />
+					<h:outputText value="#{MBCliente.cliente.telefone}" />
+
+					<h:outputText value="Celular:" />
+					<h:outputText value="#{MBCliente.cliente.celular}" />
+
+					<h:outputText value="E-mail:" />
+					<h:outputText value="#{MBCliente.cliente.email}" />
+
+					<h:outputText value="CEP:" />
+					<h:outputText value="#{MBCliente.cliente.cep}" />
+
+					<h:outputText value="Endereço:" />
+					<h:outputText value="#{MBCliente.cliente.rua}" />
+
+					<h:outputText value="Número:" />
+					<h:outputText value="#{MBCliente.cliente.numero}" />
+
+					<h:outputText value="Complemento:" />
+					<h:outputText value="#{MBCliente.cliente.complemento}" />
+
+					<h:outputText value="Bairro:" />
+					<h:outputText value="#{MBCliente.cliente.bairro}" />
+
+					<h:outputText value="Cidade:" />
+					<h:outputText value="#{MBCliente.cliente.cidade}" />
+
+					<h:outputText value="Estado:" />
+					<h:outputText value="#{MBCliente.cliente.estado}" />
+				</p:panelGrid>
+
+				<p:commandButton value="Cancelar" id="centralizar"
+					style="margin-left:60px;margin-top:10px;"
+					onclick="PF('dlgCliMais').hide();" />
+			</h:form>
+
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgCliExcluir" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Cliente - Exluir">
+			<h:form id="frmCliExcluir">
+				<p:panelGrid id="pnlCliExcluir" columns="2">
+					<h:outputText value="Código:" />
+					<h:outputText value="#{MBCliente.cliente.idcliente}" />
+
+					<h:outputText value="Nome:" />
+					<h:outputText value="#{MBCliente.cliente.nome}" />
+
+					<h:outputText value="CPF:" />
+					<h:outputText value="#{MBCliente.cliente.cpf}" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBCliente.excluir}"
+						oncomplete="PF('dlgCliExcluir').hide(); tabelaCliente.clearFilters();"
+						update=":frmCliListagem:tblCliente :msgGlobal" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgCliExcluir').hide();" />
+				</p:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgCliEditar" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Cliente - Editar">
+			<h:form id="frmCliEditar">
+				<p:panelGrid columns="2" id="pnlCliEditar">
+
+					<h:outputText value="Código:" />
+					<h:outputText value="#{MBCliente.cliente.idcliente}" />
+
+					<p:outputLabel for="txtNomeCliNovo" value="Nome: " />
+					<p:inputText id="txtNomeCliNovo" maxlength="50" size="30"
+						value="#{MBCliente.cliente.nome}" required="true"
+						requiredMessage="O Campo Nome é Obrigatório." />
+
+					<p:outputLabel for="txtCpfCliNovo" value="CPF: " />
+					<p:inputMask id="txtCpfCliNovo" mask="999.999.999-99"
+						value="#{MBCliente.cliente.cpf}" required="true"
+						requiredMessage="O Campo CPF é Obrigatório." />
+
+					<p:outputLabel for="txtSenhaCliNovo" value="Senha: " />
+					<p:password id="txtSenhaCliNovo" maxlength="10" size="15"
+						value="#{MBCliente.cliente.senha}" required="true"
+						requiredMessage="O Campo Senha é Obrigatório." />
+
+					<p:outputLabel value="Telefone: " />
+					<p:inputMask mask="(99)9999-9999" maxlength="13" size="15"
+						value="#{MBCliente.cliente.telefone}" />
+
+					<p:outputLabel value="Celular: " />
+					<p:inputMask mask="(99)99999-9999" maxlength="13" size="15"
+						value="#{MBCliente.cliente.celular}" />
+
+					<p:outputLabel value="E-mail: " />
+					<p:inputText maxlength="45" size="50"
+						value="#{MBCliente.cliente.email}" />
+
+					<p:outputLabel value="CEP: " />
+					<p:inputMask mask="99.999-999" size="15"
+						value="#{MBCliente.cliente.cep}" />
+
+					<p:outputLabel value="Endereço: " />
+					<p:inputText maxlength="50" size="30"
+						value="#{MBCliente.cliente.rua}" />
+
+					<p:outputLabel value="Número: " />
+					<p:inputText maxlength="5" size="7"
+						value="#{MBCliente.cliente.numero}" />
+
+					<p:outputLabel value="Bairro: " />
+					<p:inputText maxlength="50" size="30"
+						value="#{MBCliente.cliente.bairro}" />
+
+					<p:outputLabel value="Complemento: " />
+					<p:inputText maxlength="30" size="30"
+						value="#{MBCliente.cliente.complemento}" />
+
+					<p:outputLabel value="Cidade: " />
+					<p:inputText maxlength="30" size="30"
+						value="#{MBCliente.cliente.cidade}" />
+
+					<p:outputLabel value="Estado: " />
+					<p:inputText maxlength="2" size="3"
+						value="#{MBCliente.cliente.estado}" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="2" style="margin-left:130px;margin-top:10px;">
+					<p:commandButton value="Editar"
+						actionListener="#{MBCliente.editar}"
+						update=":frmCliListagem:tblCliente :msgGlobal"
+						onclick="PF('dlgCliEditar').hide();" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgCliEditar').hide();">
+						<p:resetInput target="pnlCliEditar" />
+					</p:commandButton>
+
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+
+	<ui:define name="rodape">
+		<ui:include src="/includes/rodape.xhtml" />
+	</ui:define>
+
+</ui:composition>

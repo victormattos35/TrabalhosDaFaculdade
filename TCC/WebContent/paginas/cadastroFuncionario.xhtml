@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/modeloPrincipal.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="menuladoe">
+		<ui:include src="/includes/itensGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="menuladod">
+		<h:form id="frmNovoFuncionario">
+			<h3>Cadastro de Funcionário</h3>
+			<h:panelGrid id="pnlFunNovo" columns="2">
+				<p:outputLabel for="txtNomeFunNovo" value="Nome: " />
+				<p:inputText id="txtNomeFunNovo" maxlength="50" size="30"
+					value="#{MBFuncionario.funcionario.nome}" required="true"
+					requiredMessage="O Campo Nome é Obrigatório." />
+
+				<p:outputLabel for="txtSenhaFunNovo" value="Senha: " />
+				<p:password id="txtSenhaFunNovo" maxlength="16" size="17"
+					value="#{MBFuncionario.funcionario.senha}" required="true"
+					requiredMessage="O Campo Senha é Obrigatório." />
+
+				<p:outputLabel for="txtCpfFunNovo" value="CPF: " />
+				<p:inputMask id="txtCpfFunNovo" mask="999.999.999-99"
+					value="#{MBFuncionario.funcionario.cpf}" required="true"
+					requiredMessage="O Campo CPF é Obrigatório." />
+
+				<p:outputLabel for="txtRgFunNovo" value="RG: " />
+				<p:inputText id="txtRgFunNovo" maxlength="13" size="15"
+					value="#{MBFuncionario.funcionario.rg}" required="true"
+					requiredMessage="O Campo RG é Obrigatório." />
+
+				<p:outputLabel value="Endereço: " for="txtEndFunNovo" />
+				<p:inputText maxlength="50" size="30" id="txtEndFunNovo"
+					value="#{MBFuncionario.funcionario.rua}" required="true"
+					requiredMessage="O Campo Endereço é Obrigatório." />
+
+				<p:outputLabel value="Número: " for="txtNumFunNovo" />
+				<p:inputText maxlength="5" size="7" id="txtNumFunNovo"
+					value="#{MBFuncionario.funcionario.numero}" required="true"
+					requiredMessage="O Campo Número é Obrigatório." />
+
+				<p:outputLabel value="Bairro: " for="txtBarFunNovo" />
+				<p:inputText maxlength="50" size="30" id="txtBarFunNovo"
+					value="#{MBFuncionario.funcionario.bairro}" required="true"
+					requiredMessage="O Campo Bairro é Obrigatório." />
+
+				<p:outputLabel value="Cidade: " for="txtCidFunNovo" />
+				<p:inputText maxlength="30" size="30" id="txtCidFunNovo"
+					value="#{MBFuncionario.funcionario.cidade}" required="true"
+					requiredMessage="O Campo Cidade é Obrigatório." />
+
+				<p:outputLabel value="Estado: " for="txtEstFunNovo" />
+				<p:inputText maxlength="2" size="3" id="txtEstFunNovo"
+					value="#{MBFuncionario.funcionario.estado}" required="true"
+					requiredMessage="O Campo Estado é Obrigatório." />
+
+				<p:outputLabel value="Telefone: " for="txtTelFunNovo" />
+				<p:inputMask mask="(99)9999-9999" maxlength="13" size="15"
+					id="txtTelFunNovo" value="#{MBFuncionario.funcionario.telefone}"
+					required="true" requiredMessage="O Campo Telefone é Obrigatório." />
+
+				<p:outputLabel value="Celular: " for="txtCelFunNovo" />
+				<p:inputMask mask="(99)99999-9999" maxlength="13" id="txtCelFunNovo"
+					size="15" value="#{MBFuncionario.funcionario.celular}"
+					required="true" requiredMessage="O Campo Celular é Obrigatório." />
+
+				<p:outputLabel value="E-mail: " for="txtEmailFunNovo" />
+				<p:inputText maxlength="45" size="50" id="txtEmailFunNovo"
+					value="#{MBFuncionario.funcionario.email}" required="true"
+					requiredMessage="O Campo E-mail é Obrigatório." />
+
+				<p:outputLabel value="Salário: " for="txtSalFunNovo" />
+				<p:inputText maxlength="10" size="12" id="txtSalFunNovo"
+					value="#{MBFuncionario.funcionario.salario}" required="true"
+					requiredMessage="O Campo Salário é Obrigatório." />
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="2">
+				<p:commandButton value="Gravar"
+					actionListener="#{MBFuncionario.novo()}"
+					update=":msgGlobal :frmNovoFuncionario" id="but" />
+				<p:commandButton value="Cancelar" id="but2"
+					action="/paginas/indexGeral.xhtml?faces-redirect=true" ajax="false"
+					immediate="true" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="rodape">
+		<ui:include src="/includes/rodape.xhtml" />
+	</ui:define>
+
+</ui:composition>

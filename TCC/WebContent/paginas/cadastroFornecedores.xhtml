@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/modeloPrincipal.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="menuladoe">
+		<ui:include src="/includes/itensGeral.xhtml" />
+	</ui:define>
+
+	<ui:define name="menuladod">
+
+		<h:form id="frmNovoFornecedor">
+			<h3>Cadastro de Fornecedor</h3>
+			<h:panelGrid id="pnlForNovo" columns="2">
+				<p:outputLabel for="txtNomeForNovo" value="Nome: " />
+				<p:inputText id="txtNomeForNovo" maxlength="50" size="30"
+					value="#{MBFornecedor.fornecedor.nome}" required="true"
+					requiredMessage="O Campo Nome é Obrigatório." />
+
+				<p:outputLabel for="txtCpfForNovo" value="CNPJ: " />
+				<p:inputMask id="txtCpfForNovo" mask="99.999.999/9999-99"
+					value="#{MBFornecedor.fornecedor.cnpj}" required="true"
+					requiredMessage="O Campo CNPJ é Obrigatório." />
+
+				<p:outputLabel value="Endereço: " />
+				<p:inputText maxlength="50" size="30"
+					value="#{MBFornecedor.fornecedor.rua}" />
+
+				<p:outputLabel value="Número: " />
+				<p:inputText maxlength="5" size="7"
+					value="#{MBFornecedor.fornecedor.numero}" />
+
+				<p:outputLabel value="Bairro: " />
+				<p:inputText maxlength="50" size="30"
+					value="#{MBFornecedor.fornecedor.bairro}" />
+
+				<p:outputLabel value="Cidade: " />
+				<p:inputText maxlength="30" size="30"
+					value="#{MBFornecedor.fornecedor.cidade}" />
+
+				<p:outputLabel value="Estado: " />
+				<p:inputText maxlength="2" size="3"
+					value="#{MBFornecedor.fornecedor.estado}" />
+
+				<p:outputLabel value="Telefone: " />
+				<p:inputMask mask="(99)9999-9999" maxlength="13" size="15"
+					value="#{MBFornecedor.fornecedor.telefone}" />
+
+				<p:outputLabel value="Fax: " />
+				<p:inputMask mask="(99)9999-9999" maxlength="13" size="15"
+					value="#{MBFornecedor.fornecedor.fax}" />
+
+				<p:outputLabel value="E-mail: " />
+				<p:inputText maxlength="45" size="50"
+					value="#{MBFornecedor.fornecedor.email}" />
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="2">
+				<p:commandButton value="Gravar"
+					actionListener="#{MBFornecedor.novo()}"
+					update=":msgGlobal :frmNovoFornecedor" id="but" />
+				<p:commandButton value="Cancelar" id="but2"
+					action="/paginas/indexGeral.xhtml?faces-redirect=true" ajax="false"
+					immediate="true" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="rodape">
+		<ui:include src="/includes/rodape.xhtml" />
+	</ui:define>
+
+</ui:composition>
